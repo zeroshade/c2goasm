@@ -47,7 +47,7 @@ func getSingleNumber(line string) int64 {
 	if len(strings.Split(field, ",")) > 1 {
 		panic(fmt.Sprintf("Unexpected comma found in field: %s", field))
 	}
-	v, err := strconv.ParseInt(field, 10, 64)
+	v, err := strconv.ParseInt(field, 0, 64)
 	if err != nil {
 		panic(fmt.Sprintf("Number parsing error: %v", err))
 	}
@@ -64,13 +64,13 @@ func getDualNumbers(line string) (int64, int64) {
 	if len(args) > 2 {
 		panic(fmt.Sprintf("Too many commas found in field: %s", field))
 	}
-	r1, err := strconv.ParseInt(args[0], 10, 64)
+	r1, err := strconv.ParseInt(args[0], 0, 64)
 	if err != nil {
 		panic(fmt.Sprintf("Number parsing error: %v", err))
 	}
 	r2 := int64(0)
 	if len(args) > 1 {
-		r2, err = strconv.ParseInt(args[1], 10, 64)
+		r2, err = strconv.ParseInt(args[1], 0, 64)
 		if err != nil {
 			panic(fmt.Sprintf("Number parsing error: %v", err))
 		}
@@ -114,7 +114,7 @@ func defineTable(constants []string, tableName string) Table {
 			bytes = append(bytes, byte(v>>16))
 			bytes = append(bytes, byte(v>>24))
 		} else if strings.Contains(line, ".quad") {
-			v, err := strconv.ParseInt(strings.Fields(line)[1], 10, 64)
+			v, err := strconv.ParseInt(strings.Fields(line)[1], 0, 64)
 			if err != nil {
 				panic(fmt.Sprintf("Atoi error for .quad: %v", err))
 			}
@@ -131,7 +131,7 @@ func defineTable(constants []string, tableName string) Table {
 			if len(fields) <= 1 || 4 <= len(fields) {
 				panic(fmt.Sprintf(".p2align must have 2 or 3 arguments; got %v", fields))
 			}
-			bits, err := strconv.ParseInt(fields[1], 10, 64)
+			bits, err := strconv.ParseInt(fields[1], 0, 64)
 			if err != nil {
 				panic(err)
 			}
